@@ -3,15 +3,20 @@
 namespace App\Controller;
 
 use App\Dao\LoginDao;
-use App\Model\UserModel;
 use Slim\Slim;
 
 class LoginController
 {
     public static function actionViewLogin()
     {
-        $mUser = new UserModel($_SESSION[LoginDao::SESSION]);
-        echo $mUser->getIdUser();
+        $slim = new Slim();
+        $slim->render('login/login.php');
+    }
+
+    public static function actionViewForgot()
+    {
+        $slim = new Slim();
+        $slim->render('login/forgot.php');
     }
 
     public static function actionLogin(array $data)

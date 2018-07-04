@@ -4,11 +4,10 @@ namespace App\Dao;
 
 use Core\Database;
 use App\Model\UserModel;
+use App\Dao\UserDao;
 
 class LoginDao extends Database
 {
-    const SESSION = "User";
-
     /**
      * LoginDao constructor.
      * @throws \Exception
@@ -33,10 +32,10 @@ class LoginDao extends Database
         }
 
         if (password_verify($pass, $result[0]['desPass'])) {
-            $_SESSION[self::SESSION] = $result[0];
+            $dUser = new UserDao();
+            $dUser->getUser($result[0]['idUser']);
 
-            if ($_SESSION[self::SESSION]['desType'] == 1) {
-                self::setUser();
+            if ($result[0]['desType'] == 1) {
                 header('location: /admin');
                 exit;
             }
@@ -50,7 +49,7 @@ class LoginDao extends Database
      */
     public static function logout()
     {
-        unset($_SESSION[self::SESSION]);
+        unset($_SESSION[UserDao::SESSION]);
     }
 
     /**
@@ -60,11 +59,12 @@ class LoginDao extends Database
     public static function verifyLogin()
     {
         if (
-            !isset($_SESSION[self::SESSION]) ||
-            !empty($_SESSION[self::SESSION]) ||
-            (int)$_SESSION[self::SESSION]['idUser'] > 0
+            !isset($_SESSION[UserDao::SESSION]) ||
+            !empty($_SESSION[UserDao::SESSION]) ||
+            (int)$_SESSION[UserDao::SESSION]['idUser'] > 0
         ) {
-            if (isset($_SESSION[self::SESSION])) {
+            if (isset($_SESSION[UserDao::SESSION])) {
+                LoginDao::logout();
                 throw new \Exception("Usuário não está logado!");
             } else {
                 header("location: /login");

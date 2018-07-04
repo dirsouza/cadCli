@@ -8,12 +8,12 @@ require_once("vendor/autoload.php");
 session_start();
 
 use Slim\Slim;
+use App\Controller\HomeController;
 use App\Controller\LoginController;
 
 $app = new Slim();
 $app->config(array(
     'debug' => true,
-    'templates.path' => 'app/View',
     'mode' => 'development'
 ));
 
@@ -21,16 +21,28 @@ $app->config(array(
  * Index
  * Url: http://www.cadcli.com.br/index
  */
-$app->get('/', function() use ($app) {
-    LoginController::actionLogin(array(
-        'desLogin' => 'admin',
-        'desPass' => 'admin',
-        'desType' => '1'
-    ));
+$app->get('/', function() {
+    HomeController::home();
+});
+
+$app->get('/login', function() {
+    LoginController::actionViewLogin();
+});
+
+$app->post('/login', function() {
+    print_r($_POST);
+});
+
+$app->get('/forgot', function() {
+    LoginController::actionViewForgot();
+});
+
+$app->post('/forgot', function() {
+    echo "E-mail enviado.";
 });
 
 $app->get('/admin', function() {
-    LoginController::actionViewLogin();
+    echo 'Administrador';
 });
 
 $app->run();
