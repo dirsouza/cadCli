@@ -1,15 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: diogo.souza
- * Date: 04/07/2018
- * Time: 20:36
- */
 
 namespace App\Controller;
 
+use Slim\Slim;
 
 class AdminController
 {
-
+    public static function actionViewHome()
+    {
+        $slim = new Slim();
+        $slim->render('admin/home/index.php');
+    }
 }

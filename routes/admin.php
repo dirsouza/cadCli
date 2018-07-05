@@ -1,7 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: diogo.souza
- * Date: 04/07/2018
- * Time: 20:32
- */
+use App\Controller\AdminController;
+
+$app->group('/admin', function() use ($app) {
+    $app->get('/', function() {
+        AdminController::actionViewHome();
+    });
+});

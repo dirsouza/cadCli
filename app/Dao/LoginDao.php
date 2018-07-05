@@ -3,8 +3,6 @@
 namespace App\Dao;
 
 use Core\Database;
-use App\Model\UserModel;
-use App\Dao\UserDao;
 
 class LoginDao extends Database
 {
@@ -60,8 +58,8 @@ class LoginDao extends Database
     {
         if (
             !isset($_SESSION[UserDao::SESSION]) ||
-            !empty($_SESSION[UserDao::SESSION]) ||
-            (int)$_SESSION[UserDao::SESSION]['idUser'] > 0
+            empty($_SESSION[UserDao::SESSION]) ||
+            !(int)$_SESSION[UserDao::SESSION]['idUser'] > 0
         ) {
             if (isset($_SESSION[UserDao::SESSION])) {
                 LoginDao::logout();

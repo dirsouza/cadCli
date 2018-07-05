@@ -9,7 +9,6 @@ session_start();
 
 use Slim\Slim;
 use App\Controller\HomeController;
-use App\Controller\LoginController;
 
 $app = new Slim();
 $app->config(array(
@@ -25,24 +24,16 @@ $app->get('/', function() {
     HomeController::home();
 });
 
-$app->get('/login', function() {
-    LoginController::actionViewLogin();
-});
+/**
+ * Login
+ * Url: http://www.cadcli.com.br/login
+ */
+require_once 'routes/login.php';
 
-$app->post('/login', function() {
-    print_r($_POST);
-});
-
-$app->get('/forgot', function() {
-    LoginController::actionViewForgot();
-});
-
-$app->post('/forgot', function() {
-    echo "E-mail enviado.";
-});
-
-$app->get('/admin', function() {
-    echo 'Administrador';
-});
+/**
+ * Administrator
+ * Url: http://www.cadcli.com.br/admin
+ */
+require_once 'routes/admin.php';
 
 $app->run();
