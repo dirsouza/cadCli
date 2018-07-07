@@ -4,22 +4,25 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>CADCli</title>
-    <link rel="shortcut icon" href="assets/img/logo.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/assets/img/logo.ico" type="image/x-icon">
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="lib/Ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="/lib/Ionicons/css/ionicons.min.css">
     <!-- FullCalendar -->
-    <link rel="stylesheet" href="lib/fullcalendar/fullcalendar.min.css">
-    <link rel="stylesheet" href="lib/fullcalendar/fullcalendar.print.min.css" media="print">
+    <link rel="stylesheet" href="/lib/fullcalendar/fullcalendar.min.css">
+    <link rel="stylesheet" href="/lib/fullcalendar/fullcalendar.print.min.css" media="print">
+    <!-- Datatables -->
+    <link rel="stylesheet" href="/lib/datatables/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="/lib/datatables/extensions/responsive/css/responsive.bootstrap.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="assets/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/assets/css/AdminLTE.min.css">
     <!-- AdminLTE Skins -->
-    <link rel="stylesheet" href="assets/css/skin-blue.css">
+    <link rel="stylesheet" href="/assets/css/skin-blue.min.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,17 +34,17 @@
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
+<body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
     <header class="main-header">
         <!-- Logo -->
         <a href="/" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <img class="logo-mini" src="assets/img/cadcli.png" alt="CADCli" style="width: 50px; margin-top: 6px;">
+            <img class="logo-mini" src="/assets/img/cadcli.png" alt="CADCli" style="width: 50px; margin-top: 6px;">
             <!-- logo for regular state and mobile devices -->
             <span class="logo-lg">
-                <img src="assets/img/logo-h.fw.png" alt="CADCli" style="width: 170px;">
+                <img src="/assets/img/logo-h.fw.png" alt="CADCli" style="width: 170px;">
             </span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
@@ -56,16 +59,21 @@
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="lib/Ionicons/png/512/ios7-contact-outline.png" class="user-image" alt="User Image">
-                            <span class="hidden-xs">Alexander Pierce</span>
+                            <img src="/assets/img/person/<?= (!empty($desPhoto)) ? $desPhoto : 'user.png' ?>" class="user-image" alt="User Image">
+                            <span class="hidden-xs">
+                                <?php
+                                    $name = explode(' ', $desName);
+                                    echo $name[0];
+                                ?>
+                            </span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img src="lib/Ionicons/png/512/ios7-contact-outline.png" class="img-circle" alt="User Image">
+                                <img src="/assets/img/person/<?= (!empty($desPhoto)) ? $desPhoto : 'user.png' ?>" class="img-circle" alt="User Image">
                                 <p>
-                                    Alexander Pierce - Web Developer
-                                    <small>Member since Nov. 2012</small>
+                                    <?= $desName ?>
+                                    <small>Membro desde <?= date('M. y', strtotime($dtRegister)) ?></small>
                                 </p>
                             </li>
                             <!-- Menu Footer-->
@@ -104,12 +112,12 @@
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="admin/client"><i class="fa fa-user"></i> Cliente</a></li>
-                        <li><a href="admin/company"><i class="fa fa-briefcase"></i> Empresa</a></li>
+                        <li><a href="/admin/client"><i class="fa fa-user"></i> Cliente</a></li>
+                        <li><a href="/admin/company"><i class="fa fa-briefcase"></i> Empresa</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="admin/users">
+                    <a href="/admin/users">
                         <i class="fa fa-user-secret"></i> <span>Usuários</span>
                     </a>
                 </li>
@@ -117,53 +125,3 @@
         </section>
         <!-- /.sidebar -->
     </aside>
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <h1>
-                Dashboard
-                <small>Painel de Controle</small>
-            </h1>
-            <ol class="breadcrumb">
-                <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">Dashboard</li>
-            </ol>
-        </section>
-
-        <!-- Main content -->
-        <section class="content">
-            <!-- Small boxes (Stat box) -->
-            <div class="row">
-                <div class="col-lg-6 col-xs-12">
-                    <!-- small box -->
-                    <div class="small-box bg-aqua">
-                        <div class="inner">
-                            <h3>0</h3>
-                            <p>Clientes</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-person"></i>
-                        </div>
-                        <a href="admin/client" class="small-box-footer">Mais informações <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-6 col-xs-12">
-                    <!-- small box -->
-                    <div class="small-box bg-green">
-                        <div class="inner">
-                            <h3>0</h3>
-                            <p>Empresas</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-briefcase"></i>
-                        </div>
-                        <a href="admin/company" class="small-box-footer">Mais informações <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-            </div>
-            <!-- /.row -->
-            

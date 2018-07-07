@@ -4,18 +4,16 @@ namespace App\Model;
 
 use Core\Helpers;
 
-class PersonModel
+class ContactModel
 {
-    private $idPerson;
-    private $idUser;
-    private $desName;
-    private $desEmail;
-    private $desPhoto;
+    private $idContact;
+    private $desPhone;
+    private $desMobile;
     private $dtRegister;
     private $dtUpdate;
 
     /**
-     * PersonModel constructor.
+     * ClientModel constructor.
      * @param array $data
      * @throws \Exception
      */
@@ -32,7 +30,7 @@ class PersonModel
         }
 
         if (!empty($helpers->getErrors())) {
-            throw new \Exception("Existem campos vazios." . $helpers->getErrors());
+            throw new \Exception("Existem campos vazios.");
         }
     }
 
@@ -43,89 +41,56 @@ class PersonModel
     private function rules()
     {
         return array(
-            'required' => array('idPerson', 'idUser', 'desName', 'desEmail'),
-            'unique' => array('desEmail')
+            'required' => array('desMobile')
         );
     }
 
     /**
      * @return mixed
      */
-    public function getIdPerson()
+    public function getIdContact()
     {
-        return $this->idPerson;
+        return $this->idContact;
     }
 
     /**
-     * @param mixed $idPerson
+     * @param mixed $idContact
      */
-    public function setIdPerson($idPerson)
+    public function setIdContact($idContact)
     {
-        $this->idPerson = $idPerson;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getIdUser()
-    {
-        return $this->idUser;
-    }
-
-    /**
-     * @param mixed $idUser
-     */
-    public function setIdUser($idUser)
-    {
-        $this->idUser = $idUser;
+        $this->idContact = $idContact;
     }
 
     /**
      * @return mixed
      */
-    public function getDesName()
+    public function getDesPhone()
     {
-        return $this->desName;
+        return $this->desPhone;
     }
 
     /**
-     * @param mixed $desName
+     * @param mixed $desPhone
      */
-    public function setDesName($desName)
+    public function setDesPhone($desPhone)
     {
-        $this->desName = $desName;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDesEmail()
-    {
-        return $this->desEmail;
-    }
-
-    /**
-     * @param mixed $desEmail
-     */
-    public function setDesEmail($desEmail)
-    {
-        $this->desEmail = $desEmail;
+        $this->desPhone = $desPhone;
     }
 
     /**
      * @return mixed
      */
-    public function getDesPhoto()
+    public function getDesMobile()
     {
-        return $this->desPhoto;
+        return $this->desMobile;
     }
 
     /**
-     * @param mixed $desPhoto
+     * @param mixed $desMobile
      */
-    public function setDesPhoto($desPhoto)
+    public function setDesMobile($desMobile)
     {
-        $this->desPhoto = $desPhoto;
+        $this->desMobile = $desMobile;
     }
 
     /**

@@ -7,7 +7,7 @@ class Config
     const CONFIG = array(
         'system' => array (
             'name' => 'Cadastro de Clientes',
-            'abbrev' => 'CadCli',
+            'abbrev' => 'CADCli',
             'version' => '1.0.0'
         ),
         'db' => array (
@@ -24,7 +24,7 @@ class Config
      * @return array
      * @throws \Exception
      */
-    public static function getConfig(string $parameter): array
+    public static function getConfig(string $parameter)
     {
         foreach (self::CONFIG as $p => $v) {
             if ($p == $parameter) {
