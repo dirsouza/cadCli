@@ -27,7 +27,8 @@ class ClientController
         $slim->render('admin/template/header.php', array(
             'desName' => $mPerson->getDesName(),
             'desPhoto' => $mPerson->getDesPhoto(),
-            'dtRegister' => $mPerson->getDtRegister()
+            'dtRegister' => $mPerson->getDtRegister(),
+            'page' => 'client'
         ));
         $slim->render('admin/client/index.php', array(
             'clients' => $dClient->get()
@@ -51,7 +52,8 @@ class ClientController
             $slim->render('admin/template/header.php', array(
                 'desName' => $mPerson->getDesName(),
                 'desPhoto' => $mPerson->getDesPhoto(),
-                'dtRegister' => $mPerson->getDtRegister()
+                'dtRegister' => $mPerson->getDtRegister(),
+                'page' => 'client'
             ));
             $slim->render('admin/client/create.php');
             $slim->render('admin/template/footer.php', array(

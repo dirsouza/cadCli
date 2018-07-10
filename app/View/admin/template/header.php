@@ -1,3 +1,4 @@
+<?php $link = strip_tags($_SERVER['REQUEST_URI'])?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -98,12 +99,12 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">MENU</li>
-                <li class="active">
+                <li <?= ($page === "admin") ? 'class="active"' : null ?>>
                     <a href="/">
                         <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="treeview">
+                <li class="treeview <?= ($page === "client" || $page === "company") ? 'active' : null ?>">
                     <a href="#">
                         <i class="fa fa-users"></i>
                         <span>Cadastro de Clientes</span>
@@ -112,8 +113,8 @@
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="/admin/client"><i class="fa fa-user"></i> Cliente</a></li>
-                        <li><a href="/admin/company"><i class="fa fa-briefcase"></i> Empresa</a></li>
+                        <li <?= ($page === "client") ? 'class="active"' : null ?>><a href="/admin/client"><i class="fa fa-user"></i> Cliente</a></li>
+                        <li <?= ($page === "company") ? 'class="active"' : null ?>><a href="/admin/company"><i class="fa fa-briefcase"></i> Empresa</a></li>
                     </ul>
                 </li>
                 <li>
