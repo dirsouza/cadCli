@@ -22,5 +22,11 @@ $app->group('/admin', function() use ($app) {
                 ClientController::actionFormCreate($_POST);
             });
         });
+
+        $app->group('/update', function() use ($app) {
+            $app->get('/:id', function($id) {
+                ClientController::actionFormUpdate([], $id);
+            });
+        });
     });
 });

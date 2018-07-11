@@ -1,4 +1,36 @@
 $(function() {
+    /**
+     * Ativação do menu
+     * @type {Location | string | any}
+     */
+    var url = window.location; // pega a url requisitada
+
+    var nUrl = url.href.split("/"); // transforma a url em array
+
+    // verifica se a array é maior que 4 e monta nova url
+    if (nUrl.length > 4) {
+        for (var i = 0; i < 5; i++) {
+            if (i === 0) {
+                url = nUrl[i] + "/";
+            } else {
+                url += nUrl[i] + "/";
+            }
+        }
+        url = url.substring(0, url.length - 1); // remove última barra
+    }
+
+    $('ul.sidebar-menu a').filter(function() {
+        return this.href == url;
+    }).parent().addClass('active');
+
+    $('ul.treeview-menu a').filter(function() {
+        return this.href == url;
+    }).parentsUntil(".sidebar-menu > .treeview-menu").addClass('active');
+
+    /**
+     * Validação de Formulário
+     * @type {Array}
+     */
     var fieldRequired = [];
 
     $('[required]').each(function() {

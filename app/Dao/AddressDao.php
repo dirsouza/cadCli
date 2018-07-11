@@ -16,6 +16,13 @@ class AddressDao extends Database
         parent::__construct();
     }
 
+    public function get()
+    {
+        $sql = $this->db->prepare("SELECT * FROM tbaddress");
+        $sql->execute();
+        return $sql->fetchAll();
+    }
+
     /**
      * @param AddressModel $f
      * @return mixed
@@ -25,12 +32,18 @@ class AddressDao extends Database
         $fields = array(
             'desZip' => $f->getDesZip(),
             'desStreet' => $f->getDesStreet(),
-            'desNumber' => $f->getDesNumber(),
-            'desComplement' => $f->getDesComplement(),
             'desNeighborhood' => $f->getDesNeighborhood(),
             'desCity' => $f->getDesCity(),
             'desState' => $f->getDesState()
         );
+
+        foreach ($this->get() as $zipCode) {
+            foreach ($zipCode as $field => $value) {
+                if ($value == $fields['desZip']) {
+                    return $zipCode['idAddress'];
+                }
+            }
+        }
 
         for ($i = 0; $i < count(array_keys($fields)); $i++) {
             $q[] = "?";

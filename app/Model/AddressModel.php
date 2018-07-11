@@ -9,8 +9,6 @@ class AddressModel
     private $idAddress;
     private $desZip;
     private $desStreet;
-    private $desNumber;
-    private $desComplement;
     private $desNeighborhood;
     private $desCity;
     private $desState;
@@ -97,38 +95,6 @@ class AddressModel
     public function setDesStreet($desStreet)
     {
         $this->desStreet = $desStreet;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDesNumber()
-    {
-        return $this->desNumber;
-    }
-
-    /**
-     * @param mixed $desNumber
-     */
-    public function setDesNumber($desNumber)
-    {
-        $this->desNumber = $desNumber;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDesComplement()
-    {
-        return $this->desComplement;
-    }
-
-    /**
-     * @param mixed $desComplement
-     */
-    public function setDesComplement($desComplement)
-    {
-        $this->desComplement = $desComplement;
     }
 
     /**

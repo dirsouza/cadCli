@@ -4,6 +4,7 @@ namespace App\Dao;
 
 use App\Model\ClientModel;
 use Core\Database;
+use Core\Helpers;
 
 class ClientDao extends Database
 {
@@ -17,6 +18,30 @@ class ClientDao extends Database
     }
 
     /**
+     * Retorna os dados contidos no banco
+     * @return array
+     */
+    public function get()
+    {
+        $sql = $this->db->prepare("SELECT * FROM vw_clientlist");
+        $sql->execute();
+        return $sql->fetchAll();
+    }
+
+    /**
+     * Retorna os dados contidos no banco referente a um ID
+     * @param int $id
+     * @return array
+     */
+    public function getId(int $id)
+    {
+        $sql = $this->db->prepare("SELECT * FROM vw_clientlist WHERE idClient = ?");
+        $sql->execute([$id]);
+        return $sql->fetchAll();
+    }
+
+    /**
+     * Inseri os dados no banco
      * @param ClientModel $f
      * @return mixed
      */
@@ -25,6 +50,8 @@ class ClientDao extends Database
         $fields = array(
             'desName' => $f->getDesName(),
             'idAddress' => $f->getIdAddress(),
+            'desNumber' => $f->getDesNumber(),
+            'desComplement' => $f->getDesComplement(),
             'idContact' => $f->getIdContact(),
             'desEmail' => $f->getDesEmail(),
             'dtBirthday' => $f->getDtBirthday()
@@ -40,12 +67,24 @@ class ClientDao extends Database
         $sql->execute(array_values($fields));
     }
 
-    public function get()
+    /**
+     * Valida se alguma informação a ser inserida no banco é única
+     * @param ClientModel $f
+     * @return bool
+     */
+    public function verifyData(ClientModel $f, array $fields)
     {
-        $sql = $this->db->prepare("SELECT * FROM vw_clientlist");
-        $sql->execute();
-        $result = $sql->fetchAll();
+        $rule = $f->rules();
+        $result = $this->get();
 
-        return $result;
+        foreach ($result as $key) {
+            foreach ($rule['unique'] as $r => $value) {
+                if ($key[$value] === $f->{'get' . ucfirst($value)}()) {
+                    $helper = new Helpers();
+                    $helper->setErrors("A informção do campo <b>" . ucfirst(preg_replace(['/des/', '/dt/'], '', $value)) . "</b> já consta no banco de dados.");
+                    $helper->sessionErro($_SERVER['REQUEST_URI'], $fields);
+                }
+            }
+        }
     }
 }

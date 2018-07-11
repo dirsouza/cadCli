@@ -20,8 +20,7 @@ class AdminController
         $slim->render('admin/template/header.php', array(
             'desName' => $mPerson->getDesName(),
             'desPhoto' => $mPerson->getDesPhoto(),
-            'dtRegister' => $mPerson->getDtRegister(),
-            'page' => "admin"
+            'dtRegister' => $mPerson->getDtRegister()
         ));
         $slim->render('admin/home/index.php');
         $slim->render('admin/template/footer.php', array(

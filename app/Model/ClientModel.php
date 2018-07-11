@@ -9,6 +9,8 @@ class ClientModel
     private $idClient;
     private $desName;
     private $idAddress;
+    private $desNumber;
+    private $desComplement;
     private $idContact;
     private $desEmail;
     private $dtBirthday;
@@ -26,15 +28,26 @@ class ClientModel
         foreach ($data as $key => $value) {
             $method = 'set' . ucfirst($key);
             if (method_exists($this, $method)) {
-                if ($helpers->catchErrors($key, $value)) {
+                if ($helpers->catchErrors((string)$key, (string)$value)) {
                     $this->{$method}(trim($value));
                 }
             }
         }
 
         if (!empty($helpers->getErrors())) {
-            throw new \Exception("Existem campos vazios.");
+            $helpers->sessionErro($_SERVER['REQUEST_URI'], $data);
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function rules()
+    {
+        return array(
+            'required' => ['desName', 'idAddress', 'idContact', 'desEmail', 'dtBirthday'],
+            'unique' => ['desEmail']
+        );
     }
 
     /**
@@ -83,6 +96,38 @@ class ClientModel
     public function setIdAddress($idAddress): void
     {
         $this->idAddress = $idAddress;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDesNumber()
+    {
+        return $this->desNumber;
+    }
+
+    /**
+     * @param mixed $desNumber
+     */
+    public function setDesNumber($desNumber)
+    {
+        $this->desNumber = $desNumber;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDesComplement()
+    {
+        return $this->desComplement;
+    }
+
+    /**
+     * @param mixed $desComplement
+     */
+    public function setDesComplement($desComplement)
+    {
+        $this->desComplement = $desComplement;
     }
 
     /**

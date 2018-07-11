@@ -27,8 +27,7 @@ class ClientController
         $slim->render('admin/template/header.php', array(
             'desName' => $mPerson->getDesName(),
             'desPhoto' => $mPerson->getDesPhoto(),
-            'dtRegister' => $mPerson->getDtRegister(),
-            'page' => 'client'
+            'dtRegister' => $mPerson->getDtRegister()
         ));
         $slim->render('admin/client/index.php', array(
             'clients' => $dClient->get()
@@ -52,8 +51,59 @@ class ClientController
             $slim->render('admin/template/header.php', array(
                 'desName' => $mPerson->getDesName(),
                 'desPhoto' => $mPerson->getDesPhoto(),
-                'dtRegister' => $mPerson->getDtRegister(),
-                'page' => 'client'
+                'dtRegister' => $mPerson->getDtRegister()
+            ));
+            $slim->render('admin/client/create.php');
+            $slim->render('admin/template/footer.php', array(
+                'version' => $system['version'],
+                'abbrev' => $system['abbrev'],
+                'name' => $system['name']
+            ));
+        } else {
+            $i = [
+                'idAddress' => 1,
+                'idContact' =>1
+            ];
+
+            $mV = new ClientModel($data+$i);
+            $dV = new ClientDao();
+            $dV->verifyData($mV, $data);
+
+            $mAddress = new AddressModel($data);
+            $dAddress = new AddressDao();
+            $id['idAddress'] = $dAddress->insert($mAddress);
+
+            $mContact = new ContactModel($data);
+            $dContact = new ContactDao();
+            $id['idContact'] = $dContact->insert($mContact);
+
+            $mClient = new ClientModel($data+$id);
+            $dClient = new ClientDao();
+            $dClient->insert($mClient);
+
+            header("location: /admin/client");
+            exit;
+        }
+    }
+
+    public static function actionFormUpdate(array $data = array(), int $id)
+    {
+        LoginDao::verifyLogin();
+
+        if (empty($data)) {
+            $mPerson = new PersonModel($_SESSION[UserDao::SESSION]);
+            $system = Config::getConfig('system');
+
+            $dC = new ClientDao();
+            $result = $dC ->getId($id);
+
+            print_r($result[0]); exit;
+
+            $slim = new Slim();
+            $slim->render('admin/template/header.php', array(
+                'desName' => $mPerson->getDesName(),
+                'desPhoto' => $mPerson->getDesPhoto(),
+                'dtRegister' => $mPerson->getDtRegister()
             ));
             $slim->render('admin/client/create.php');
             $slim->render('admin/template/footer.php', array(
